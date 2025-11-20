@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Strona testowa z widgetem chatowym</title>
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; padding:24px; }
+    main { max-width: 900px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Strona testowa</h1>
+    <p>To jest przykładowa strona testowa z osadzonym widgetem chatowym.</p>
+  </main>
+
+  <!-- tutaj osadzamy gotowy element web-component widgetu -->
+  <vapi-widget
+    public-key="59734b64-35ee-4582-b770-07835cb597aa"
+    assistant-id="4833790d-997c-494f-ae64-e26ffac45059"
+    mode="chat"
+    theme="dark"
+    base-bg-color="#000000"
+    accent-color="#b81414"
+    cta-button-color="#1c03e0"
+    cta-button-text-color="#f1df41"
+    border-radius="large"
+    size="full"
+    position="bottom-right"
+    title="ZADAJ PYTANIE"
+    start-button-text="Start"
+    end-button-text="End Call"
+    cta-subtitle="Hej! Tu Diego!"
+    chat-first-message="Witaj w Centrum Językowym Salut Hola! W czym mogę Ci dzisiaj pomóc? "
+    chat-placeholder="Wpisz wiadomość..."
+    voice-show-transcript="true"
+    consent-required="true"
+    consent-title="Terms and conditions"
+    consent-content='By clicking "Agree," and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as otherwise described in our Terms of Service.'
+    consent-storage-key="vapi_widget_consent"
+  ></vapi-widget>
+
+  <!-- skrypt widgetu -->
+  <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
+
+  <!-- opcjonalny skrypt pomocniczy — loguje kiedy komponent jest zarejestrowany -->
+  <script>
+    (function waitForWidget(){
+      if (window.customElements && window.customElements.get('vapi-widget')) {
+        console.log('vapi-widget zarejestrowany i gotowy');
+        return;
+      }
+      // spróbuj ponownie kilka razy
+      var tries = 0;
+      var id = setInterval(function(){
+        tries++;
+        if (window.customElements && window.customElements.get('vapi-widget')) {
+          console.log('vapi-widget zarejestrowany i gotowy (po ' + tries + ' próbach)');
+          clearInterval(id);
+        } else if (tries > 50) {
+          console.warn('vapi-widget nie zarejestrowany — sprawdź, czy skrypt ładuje się poprawnie');
+          clearInterval(id);
+        }
+      }, 200);
+    })();
+  </script>
+</body>
+</html>
